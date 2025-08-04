@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36327.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopeli.ProductManagement.API", "Shopeli.ProductManagement.API\Shopeli.ProductManagement.API.csproj", "{FA83FFDC-6342-4A14-AE41-BD2638F602CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopeli.ShoppingCart.API", "Shopeli.ShoppingCart.API\Shopeli.ShoppingCart.API.csproj", "{A6A459A6-8708-4772-ADEA-C8A19F9F6ADC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA83FFDC-6342-4A14-AE41-BD2638F602CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA83FFDC-6342-4A14-AE41-BD2638F602CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA83FFDC-6342-4A14-AE41-BD2638F602CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA83FFDC-6342-4A14-AE41-BD2638F602CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6A459A6-8708-4772-ADEA-C8A19F9F6ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6A459A6-8708-4772-ADEA-C8A19F9F6ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6A459A6-8708-4772-ADEA-C8A19F9F6ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6A459A6-8708-4772-ADEA-C8A19F9F6ADC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E67A9BD-6368-4603-A687-FB0CF6F098D9}
+	EndGlobalSection
+EndGlobal

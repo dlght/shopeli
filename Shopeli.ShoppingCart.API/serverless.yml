@@ -1,0 +1,37 @@
+﻿service: grocery-shopping-service
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: dotnet8
+  region: us-east-1
+  stage: dev
+  environment:
+    ProductService__BaseUrl: https://YOUR_PRODUCT_API_URL_HERE.execute-api.us-east-1.amazonaws.com
+
+functions:
+  api:
+    handler: ShoppingList.API::ShoppingList.API.LambdaEntryPoint::FunctionHandlerAsync
+    events:
+      - httpApi: '*'
+
+resources:
+  Resources:
+    ShoppingListsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ShoppingLists
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: Id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: Id
+            KeyType: HASH
+
+  Outputs:
+    ApiUrl:
+      Description: API Gateway endpoint URL
+      Value:
+        Fn::Sub: 'https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com'

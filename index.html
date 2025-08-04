@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grocery Manager</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .section { margin: 30px 0; padding: 20px; border: 1px solid #ccc; }
+        input, select, button { margin: 5px; padding: 8px; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .item { padding: 10px; margin: 5px 0; background: #f8f9fa; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>ShopELI Grocery Manager</h1>
+
+    <!-- Products Section -->
+    <div class="section">
+        <h2>Add Product</h2>
+        <input type="text" id="productName" placeholder="Product Name">
+        <input type="text" id="productBrand" placeholder="Brand">
+        <select id="productUnit">
+            <option value="0">Gram</option>
+            <option value="1">Kilogram</option>
+            <option value="2">Liter</option>
+            <option value="3">Milliliter</option>
+            <option value="4">Piece</option>
+        </select>
+        <input type="number" id="productQuantity" placeholder="Quantity" step="0.01">
+        <button onclick="addProduct()">Add Product</button>
+        
+        <h3>Products</h3>
+        <div id="productsList"></div>
+    </div>
+
+    <!-- Shopping Lists Section -->
+    <div class="section">
+        <h2>Create Shopping List</h2>
+        <input type="text" id="listName" placeholder="List Name">
+        <input type="date" id="startDate">
+        <input type="date" id="endDate">
+        <button onclick="createList()">Create List</button>
+        
+        <h3>Shopping Lists</h3>
+        <div id="shoppingLists"></div>
+    </div>
+
+    <!-- Add to List Section -->
+    <div class="section">
+        <h2>Add Product to List</h2>
+        <select id="selectList">
+            <option value="">Select Shopping List...</option>
+        </select>
+        <select id="selectProduct">
+            <option value="">Select Product...</option>
+        </select>
+        <input type="number" id="addQuantity" placeholder="Quantity" step="0.01">
+        <button onclick="addToList()">Add to List</button>
+    </div>
+
+    <div id="message"></div>
+
+    <script>
+        // Replace with your actual API URLs after deployment
+        const PRODUCT_API = 'https://your-product-api-url.execute-api.us-east-1.amazonaws.com';
+        const SHOPPING_API = 'https://your-shopping-api-url.execute-api.us-east-1.amazonaws.com';
+        
+        let products = [];
+        let shoppingLists = [];
+
+        // Load data on page load
+        window.onload = function() {
+            loadProducts();
+            loadShoppingLists();
+        };
+
+        function showMessage(text, isError = false) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = isError ? 'error' : 'success';
+            setTimeout(() => msg.textContent = '', 3000);
+        }
+
+        async function addProduct() {
+            const data = {
+                name: document.getElementById('productName').value,
+                brand: document.getElementById('productBrand').value,
+                unit: parseInt(document.getElementById('productUnit').value),
+                quantity: parseFloat(document.getElementById('productQuantity').value)
+            };
+
+            try {
+                const response = await fetch(`${PRODUCT_API}/products`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    showMessage('Product added!');
+                    loadProducts();
+                    // Clear form
+                    document.getElementById('productName').value = '';
+                    document.getElementById('productBrand').value = '';
+                    document.getElementById('productQuantity').value = '';
+                } else {
+                    showMessage('Error adding product', true);
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, true);
+            }
+        }
+
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${PRODUCT_API}/products`);
+                products = await response.json();
+                displayProducts();
+                updateProductSelect();
+            } catch (error) {
+                showMessage('Error loading products: ' + error.message, true);
+            }
+        }
+
+        function displayProducts() {
+            const units = ['g', 'kg', 'L', 'mL', 'pc'];
+            const html = products.map(p => 
+                `<div class="item">${p.name} - ${p.brand} (${p.quantity} ${units[p.unit]})</div>`
+            ).join('');
+            document.getElementById('productsList').innerHTML = html;
+        }
+
+        function updateProductSelect() {
+            const select = document.getElementById('selectProduct');
+            const units = ['g', 'kg', 'L', 'mL', 'pc'];
+            select.innerHTML = '<option value="">Select Product...</option>' +
+                products.map(p => 
+                    `<option value="${p.id}">${p.name} - ${p.brand} (${units[p.unit]})</option>`
+                ).join('');
+        }
+
+        async function createList() {
+            const data = {
+                name: document.getElementById('listName').value,
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value
+            };
+
+            try {
+                const response = await fetch(`${SHOPPING_API}/shoppinglists`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    showMessage('Shopping list created!');
+                    loadShoppingLists();
+                    // Clear form
+                    document.getElementById('listName').value = '';
+                    document.getElementById('startDate').value = '';
+                    document.getElementById('endDate').value = '';
+                } else {
+                    showMessage('Error creating list', true);
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, true);
+            }
+        }
+
+        async function loadShoppingLists() {
+            try {
+                const response = await fetch(`${SHOPPING_API}/shoppinglists`);
+                shoppingLists = await response.json();
+                displayShoppingLists();
+                updateListSelect();
+            } catch (error) {
+                showMessage('Error loading shopping lists: ' + error.message, true);
+            }
+        }
+
+        function displayShoppingLists() {
+            const units = ['g', 'kg', 'L', 'mL', 'pc'];
+            const html = shoppingLists.map(list => {
+                const itemsHtml = list.items.map(item => 
+                    `<div style="margin-left: 20px;">• ${item.productName} - ${item.quantity} ${units[item.unit]} ${item.isCompleted ? '✓' : ''}</div>`
+                ).join('');
+                
+                return `<div class="item">
+                    <strong>${list.name}</strong> (${new Date(list.startDate).toLocaleDateString()} - ${new Date(list.endDate).toLocaleDateString()})
+                    ${itemsHtml}
+                </div>`;
+            }).join('');
+            
+            document.getElementById('shoppingLists').innerHTML = html;
+        }
+
+        function updateListSelect() {
+            const select = document.getElementById('selectList');
+            select.innerHTML = '<option value="">Select Shopping List...</option>' +
+                shoppingLists.map(list => 
+                    `<option value="${list.id}">${list.name}</option>`
+                ).join('');
+        }
+
+        async function addToList() {
+            const listId = document.getElementById('selectList').value;
+            const productId = document.getElementById('selectProduct').value;
+            const quantity = parseFloat(document.getElementById('addQuantity').value);
+
+            if (!listId || !productId || !quantity) {
+                showMessage('Please select list, product, and quantity', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${SHOPPING_API}/shoppinglists/${listId}/items`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId, quantity })
+                });
+
+                if (response.ok) {
+                    showMessage('Product added to list! (Quantities accumulate)');
+                    loadShoppingLists();
+                    document.getElementById('addQuantity').value = '';
+                } else {
+                    showMessage('Error adding to list', true);
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>
