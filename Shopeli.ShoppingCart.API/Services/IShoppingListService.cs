@@ -1,4 +1,7 @@
 ﻿using Shopeli.ShoppingCart.API.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopeli.ShoppingCart.API.Services
 {

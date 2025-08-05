@@ -1,5 +1,10 @@
-﻿using Shopeli.ShoppingCart.API.Models;
+﻿using Microsoft.Extensions.Configuration;
+using Shopeli.ShoppingCart.API.Models;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Shopeli.ShoppingCart.API.Services
 {

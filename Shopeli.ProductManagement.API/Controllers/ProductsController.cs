@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Shopeli.ProductManagement.API.Models;
 using Shopeli.ProductManagement.API.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopeli.ProductManagement.API.Controllers
 {

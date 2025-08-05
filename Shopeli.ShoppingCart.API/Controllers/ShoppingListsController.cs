@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Shopeli.ShoppingCart.API.Models;
 using Shopeli.ShoppingCart.API.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopeli.ShoppingCart.API.Controllers
 {

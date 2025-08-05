@@ -2,10 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>25d2fd15-c9e2-4e37-be6b-b8c55c4806cc</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+	<AWSProjectType>Lambda</AWSProjectType>
+	<AssemblyName>Shopeli.ProductManagement.API</AssemblyName>
+	<RootNamespace>Shopeli.ProductManagement.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

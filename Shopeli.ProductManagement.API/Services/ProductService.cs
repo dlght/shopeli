@@ -1,6 +1,9 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using Shopeli.ProductManagement.API.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopeli.ProductManagement.API.Services
 {

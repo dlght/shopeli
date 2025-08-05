@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>e5264d8a-7e7e-4f4f-a96a-12a21efa300f</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+	  <TargetFramework>net8.0</TargetFramework>
+	  <AWSProjectType>Lambda</AWSProjectType>
+	  <AssemblyName>Shopeli.ShoppingCart.API</AssemblyName>
+	  <RootNamespace>Shopeli.ShoppingCart.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
